@@ -8,6 +8,7 @@ public class BioGeneApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BioGeneApplication.class, args);
+		System.out.println("System started successfully!");
 	}
 
 }
