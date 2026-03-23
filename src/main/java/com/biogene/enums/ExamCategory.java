@@ -1,0 +1,18 @@
+package com.biogene.enums;
+
+public enum ExamCategory {
+    ALERGIA_INTOLERANCIA,
+    ANDROLOGIA,
+    BIOLOGIA_MOLECULAR,
+    BIOQUIMICA,
+    CITOLOGIA,
+    GENETICA,
+    HEMATOLOGIA,
+    HORMONAL,
+    IMUNOLOGIA,
+    MICOLOGIA,
+    MICROBIOLOGIA,
+    ONCOLOGIA,
+    PARASITOLOGIA,
+    URINALISE
+}
