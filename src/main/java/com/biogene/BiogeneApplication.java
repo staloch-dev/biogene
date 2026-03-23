@@ -7,8 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BiogeneApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BiogeneApplication.class, args);
-		System.out.println("System started successfully!");
+		var context = SpringApplication.run(BiogeneApplication.class, args);
+		String port = context.getEnvironment().getProperty("server.port", "8080");
+		System.out.println("\n~~~ System started successfully! ~~~");
+		System.out.println("Swagger UI: http://localhost:" + port + "/swagger-ui.html");
+		System.out.println("--------------------------------------------\n");
 	}
 
 }
