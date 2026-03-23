@@ -1,6 +1,8 @@
 package com.biogene.domain;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.ArrayList;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -10,6 +12,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.EnumType;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.FetchType;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -61,5 +65,8 @@ public class Patient {
 
     @Column(length = 500)
     private String medicationDescription;
+
+    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
+    private List<Exam> exams = new ArrayList<>();
 
 }

@@ -1,11 +1,16 @@
 package com.biogene.domain;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.FetchType;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -33,5 +38,8 @@ public class Laboratory {
 
     @Column(nullable = false, length = 11)
     private String phone;
+
+    @OneToMany(mappedBy = "laboratory", fetch = FetchType.LAZY)
+    private List<Exam> exams = new ArrayList<>();
 
 }
