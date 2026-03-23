@@ -14,12 +14,14 @@ import com.biogene.exception.BusinessException;
 import com.biogene.exception.DuplicateResourceException;
 import com.biogene.exception.ResourceNotFoundException;
 import com.biogene.mapper.PatientMapper;
+import com.biogene.repository.ExamRepository;
 import com.biogene.repository.PatientRepository;
 
 @Service
 @RequiredArgsConstructor
 public class PatientService {
 
+    private final ExamRepository examRepository;
     private final PatientRepository patientRepository;
     private final PatientMapper patientMapper;
 
@@ -105,6 +107,14 @@ public class PatientService {
         Patient patient = patientRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Paciente com ID " + id + " não encontrado."));
+
+        long examCount = examRepository.countByPatientId(id);
+        if (examCount > 0) {
+            throw new BusinessException(
+                    "Não é possível excluir o paciente " + patient.getFullName() +
+                            ". Existem " + examCount + " exame(s) vinculado(s).");
+        }
+
         patientRepository.delete(patient);
     }
 

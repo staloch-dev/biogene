@@ -10,14 +10,17 @@ import lombok.RequiredArgsConstructor;
 import com.biogene.domain.Laboratory;
 import com.biogene.dto.LaboratoryRequestDTO;
 import com.biogene.dto.LaboratoryResponseDTO;
+import com.biogene.exception.BusinessException;
 import com.biogene.exception.ResourceNotFoundException;
 import com.biogene.mapper.LaboratoryMapper;
+import com.biogene.repository.ExamRepository;
 import com.biogene.repository.LaboratoryRepository;
 
 @Service
 @RequiredArgsConstructor
 public class LaboratoryService {
 
+    private final ExamRepository examRepository;
     private final LaboratoryRepository laboratoryRepository;
     private final LaboratoryMapper laboratoryMapper;
 
@@ -69,6 +72,13 @@ public class LaboratoryService {
         Laboratory laboratory = laboratoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Laboratório com ID " + id + " não encontrado."));
+
+        long examCount = examRepository.countByLaboratoryId(id);
+        if (examCount > 0) {
+            throw new BusinessException(
+                    "Não é possível excluir o laboratório. Existem " + examCount + " exame(s) vinculado(s).");
+        }
+
         laboratoryRepository.delete(laboratory);
     }
 
